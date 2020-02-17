@@ -43,10 +43,10 @@ Route::namespace('App\Http\Controllers')->group(function(){
 /** @var \Dingo\Api\Routing\Router $api */
 $api = app('Dingo\Api\Routing\Router');
 $api
-    ->version('v2', function (\Dingo\Api\Routing\Router $api) {
+    ->version('v2', function ($api) {
         $api->group([
             'middleware' => 'auth:api',
-        ], function (\Dingo\Api\Routing\Router $api) {
-            $api->resource('users', \App\BunkerMaestro\UserManagement\Controllers\UserController::class, ['only' => ['index']]);
+        ], function ($api) {
+            $api->resource('users', \App\BunkerMaestro\UserManagement\Controllers\UserController::class, ['only' => ['index', 'store', 'show']]);
         });
     });
