@@ -5,13 +5,9 @@ namespace Tests\Feature\Users;
 
 
 use App\User;
-use Illuminate\Foundation\Testing\TestResponse;
-use Illuminate\Support\Str;
-use PHPUnit\Framework\Assert as PHPUnit;
 use Tests\Feature\Core\AuthenticatedTestCase;
-use Tests\TestCase;
 
-class TestIndex extends AuthenticatedTestCase
+class TestUserIndex extends AuthenticatedTestCase
 {
 
     public function setUp(): void
