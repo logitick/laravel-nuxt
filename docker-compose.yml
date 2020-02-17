@@ -1,0 +1,47 @@
+version: '2.1'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+      args:
+        COMPOSER: "true"
+        XDEBUG: "true"
+    volumes:
+      - .:/var/www/html
+    working_dir: /var/www/html
+    ports:
+      - "8080:80"
+    environment:
+      CONTAINER_ROLE: app
+      DEBUG: 'true'
+      TEST_MODE: 'local'
+      APP_KEY: base64:Wl8MrDC7UiWbz2+9jowCzp7R+cVqF+ZuVf/vj/uKZ+8=
+      DB_HOST: db
+      DB_DATABASE: demo
+      DB_USERNAME: demo
+      DB_PASSWORD: demo
+      DB_PORT: 3306
+    depends_on:
+      - db
+    links:
+      - db
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+      MYSQL_USER: demo
+      MYSQL_PASSWORD: demo
+      MYSQL_DATABASE: demo
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./docker/mysql/sql:/docker-entrypoint-initdb.d
+      - ./docker/mysql/log:/var/log/mysql
+      - ./docker/mysql/config/my.cnf:/etc/mysql/conf.d/my.cnf:ro
+    ports:
+      - "3307:3306"
+
+volumes:
+  db-data:
+    driver: local
